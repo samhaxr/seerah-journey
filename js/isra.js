@@ -1,0 +1,42 @@
+// All statements cite the Qur'an, Sahih al-Bukhari or Sahih Muslim (sunnah.com numbering).
+const ISRA_SECTIONS=[
+{id:"intro",t:"The Night Journey and the Ascension",s:[["'Exalted is He who took His Servant by night from al-Masjid al-Haram to al-Masjid al-Aqsa, whose surroundings We have blessed, to show him of Our signs.'",["q:17:1"]],["Surah an-Najm describes what he saw at the Lote Tree of the Utmost Boundary, near the Garden of Refuge: 'His sight did not swerve, nor did it transgress. He certainly saw of the greatest signs of his Lord.'",["q:53:13","q:53:14","q:53:15","q:53:16","q:53:17","q:53:18"]],["It took place while he was in Makkah.",["b:349"]],["The sources do not give its date. (It is commonly observed on 27 Rajab; that date is not from these sources.)",[]]]},
+{id:"isra",t:"Al-Isra: Makkah to Jerusalem",s:[["Al-Buraq was brought to him: a white animal, larger than a donkey and smaller than a mule, whose stride reached as far as its sight.",["m:162a","b:3887"]],["He came to Bait al-Maqdis, tethered it to the ring used by the prophets, entered the mosque and prayed two rakʿahs.",["m:162a"]],["Gabriel brought him a vessel of wine and a vessel of milk; he chose the milk, and Gabriel said: 'You have chosen the natural thing (al-fitrah).'",["m:162a"]],["When Quraysh disbelieved him, Allah displayed Jerusalem before him and he described it to them while looking at it.",["b:3886"]],["The sights shown to him that night were a trial for the people.",["q:17:60","b:3888"]]]},
+{id:"miraj",t:"Al-Miʿraj: The Seven Heavens",s:[["Gabriel ascended with him; at each heaven the gate was opened only after the question 'Who is it?' 'Gabriel.' 'Who is with you?' 'Muhammad.'",["b:3887"]],["He met Adam in the first heaven, Yahya and ʿIsa in the second, Yusuf in the third, Idris in the fourth, Harun in the fifth, Musa in the sixth and Ibrahim in the seventh, each welcoming him.",["b:3887","m:162a"]],["Ibrahim was reclining against al-Bait al-Maʿmur, which seventy thousand angels enter every day, never to return.",["m:162a","b:3207"]],["Then he was taken to Sidrat al-Muntaha, the Lote Tree of the Utmost Boundary, from which flowed four rivers.",["b:3887","q:53:14"]]]},
+{id:"salah",t:"The Gift of Prayer",s:[["Fifty prayers a day were enjoined on him.",["b:3887","b:349"]],["Passing Musa, he was told: 'Your followers cannot bear fifty prayers a day… go back to your Lord and ask Him to lighten it.'",["b:3887"]],["He went back repeatedly (in Bukhari's narration ten were removed at a time, in Muslim's five) until five prayers a day remained.",["b:3887","m:162a"]],["He said: 'I have requested so much of my Lord that I feel ashamed, but I am satisfied now.' Then a voice said: 'I have passed My order and lessened the burden of My worshippers.'",["b:3887"]]]}];
+const STEPS=[
+{k:"aqsa",lvl:"Earth",n:"Masjid al-Aqsa",sym:"🕌",s:[["He prayed two rakʿahs in Bait al-Maqdis before the ascent.",["m:162a"]]]},
+{k:"h1",lvl:"1st heaven",n:"Adam",s:[["Gabriel said: 'This is your father, Adam; greet him.' Adam returned the greeting: 'Welcome, O pious son and pious Prophet.'",["b:3887"]],["Adam was in the first (nearest) heaven, with the souls of his offspring on his right and left.",["m:162a","b:349"]]]},
+{k:"h2",lvl:"2nd heaven",n:"Yahya and ʿIsa",s:[["He saw Yahya and ʿIsa, who were cousins of each other.",["b:3887"]],["Muslim's narration also places ʿIsa son of Maryam and Yahya son of Zakariya in the second heaven.",["m:162a"]]]},
+{k:"h3",lvl:"3rd heaven",n:"Yusuf",s:[["He saw Yusuf.",["b:3887"]],["Yusuf had been given half of beauty.",["m:162a"]]]},
+{k:"h4",lvl:"4th heaven",n:"Idris",s:[["He saw Idris, who welcomed him: 'O pious brother and pious Prophet.'",["b:3887"]],["Muslim's narration also places Idris in the fourth heaven.",["m:162a"]]]},
+{k:"h5",lvl:"5th heaven",n:"Harun",s:[["He saw Harun (Aaron).",["b:3887","m:162a"]]]},
+{k:"h6",lvl:"6th heaven",n:"Musa",s:[["He saw Musa (Moses).",["b:3887","m:162a"]]]},
+{k:"h7",lvl:"7th heaven",n:"Ibrahim",s:[["He saw Ibrahim: 'This is your father; greet him.'",["b:3887"]],["Ibrahim was reclining against al-Bait al-Maʿmur, which 70,000 angels enter daily, never to return.",["m:162a","b:3207"]]]},
+{k:"sidrah",lvl:"Beyond",n:"Sidrat al-Muntaha",sym:"🌿",s:[["Its fruits were like the clay jars of Hajr and its leaves like the ears of elephants; four rivers flowed: two hidden (in Paradise) and two visible, the Nile and the Euphrates.",["b:3887"]],["'At the Lote Tree of the Utmost Boundary, near it is the Garden of Refuge.'",["q:53:14","q:53:15"]]]},
+{k:"salah",lvl:"The gift",n:"50 → 5 prayers",sym:"۵",s:ISRA_SECTIONS[3].s}];
+const ISRA_NOTE="Narrations differ slightly in detail: in Abu Dharr's report (Bukhari 349) the narrator did not fix every heaven and mentions Ibrahim in the sixth; the order above follows Bukhari 3887 and Muslim 162a, which agree.";
+// render sections
+document.getElementById('sections').innerHTML=ISRA_SECTIONS.map(x=>`<section class="course" id="s-${x.id}"><div class="row" style="align-items:center"><h2>${x.t}</h2>${verseBtn(qrefs(x.s))}</div><p class="lead">${sent(x.s)}</p>${x.id==='isra'?'<div id="imap"></div>':''}${x.id==='miraj'?'<div class="heavens"><div class="ladder" id="ladder"></div><div class="hpanel" id="hpanel"></div></div><p style="font-size:12px;color:var(--muted)"><i>'+ISRA_NOTE+'</i> '+cites(["b:349","b:3887","m:162a"])+'</p>':''}</section>`).join('');
+// heavens ladder (top = highest)
+const order=[...STEPS].reverse();
+ladder.innerHTML=order.map(st=>`<button class="rung ${st.k.startsWith('h')?'heaven':'special'}" data-k="${st.k}"><span class="gate">${st.sym||'<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 21V10a7 7 0 0 1 14 0v11" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 21v-7a3 3 0 0 1 6 0v7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>'}</span><span class="lv">${st.lvl}</span><b>${st.n}</b></button>`).join('');
+function stepShow(k){const st=STEPS.find(s=>s.k===k);ladder.querySelectorAll('.rung').forEach(r=>r.classList.toggle('on',r.dataset.k===k));
+ hpanel.innerHTML=`<div class="lbl">${st.lvl.toUpperCase()}</div><h3>${st.n}</h3><p>${sent(st.s)}</p>`}
+ladder.querySelectorAll('.rung').forEach(r=>r.onclick=()=>stepShow(r.dataset.k));stepShow('h1');
+// Isra map
+const im=L.map('imap',{scrollWheelZoom:false});
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:13,attribution:'Tiles © Esri'}).addTo(im);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',{maxZoom:13,opacity:.55,className:'relief'}).addTo(im);
+const MK=[21.4225,39.8262],AQ=[31.7761,35.2358];im.fitBounds([MK,AQ],{padding:[40,40]});
+const ic=L.divIcon({className:'pin',html:'<span class="pinv"><i style="display:block;transform:rotate(45deg);color:#c9a14a;text-align:center;line-height:22px;font-size:12px;font-style:normal">⌂</i></span>',iconSize:[44,44],iconAnchor:[22,40]});
+const pts=[];for(let i=0;i<=30;i++){const t=i/30;pts.push([MK[0]+(AQ[0]-MK[0])*t,MK[1]+(AQ[1]-MK[1])*t+Math.sin(Math.PI*t)*-0.9])}
+L.polyline(pts,{color:'#a5761f',weight:4,dashArray:'8 10',className:'isra-route'}).addTo(im);
+const IP=[{ll:MK,n:"Masjid al-Haram",sub:"Makkah: the journey began here",s:[["'…from al-Masjid al-Haram…'",["q:17:1"]],["He was in Makkah when the roof of his house was opened and Gabriel descended.",["b:349"]]]},
+{ll:AQ,n:"Masjid al-Aqsa",sub:"Jerusalem (Bait al-Maqdis)",s:[["'…to al-Masjid al-Aqsa, whose surroundings We have blessed.'",["q:17:1"]],["He tethered al-Buraq at the ring used by the prophets and prayed two rakʿahs in the mosque.",["m:162a"]]]}];
+IP.forEach(p=>L.marker(p.ll,{icon:ic}).addTo(im).bindTooltip(p.n,{permanent:true,direction:'right',className:'lbl2',offset:[10,-14]}).on('click',()=>ipShow(p)));
+L.marker([26.6,37.9],{interactive:false,icon:L.divIcon({className:'maplbl sea',html:'Red Sea',iconSize:[120,24],iconAnchor:[60,12]})}).addTo(im);
+const ipanel=L.control({position:'topright'});ipanel.onAdd=()=>{const d=L.DomUtil.create('div','ipanel');d.id='ipanel';return d};ipanel.addTo(im);if(window.LANG==='ur'||innerWidth<=600){const d=document.getElementById('ipanel');im.getContainer().after(d);d.classList.add('below')}
+function ipShow(p){document.getElementById('ipanel').innerHTML=`<b>${p.n}</b><br><small>${p.sub}</small><p>${sent(p.s)}</p><small><i>Route line is schematic; the sources do not describe the path taken.</i></small>`}
+ipShow(IP[1]);
+markViewed(620);
